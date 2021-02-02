@@ -3,6 +3,6 @@ DB = {
     "port": 3306,
     "user": "root",
     "password": "rootroot",
-    "database": "todos",
+    "database": "car_rental",
     "charset": "utf8mb4",
 }
