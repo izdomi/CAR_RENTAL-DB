@@ -13,5 +13,3 @@ DB = {
 }
 
 DB_URI = os.getenv("DATABASE_URI")
-
-APP_ENV = os.getenv("APP_ENV")
