@@ -21,7 +21,7 @@ class Client(Base):
     email=Column(String(15), nullable=True)
     login_at = Column(TIMESTAMP, default=datetime.datetime.utcnow)
     loout_at = Column(TIMESTAMP, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
-
+#kto dy rreshtat lart i kam vene gjasme per te treguar kur ehste loguar dhe cloguar klienti
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
