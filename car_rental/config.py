@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 DB = {
@@ -13,3 +14,4 @@ DB = {
 }
 
 DB_URI = os.getenv("DATABASE_URI")
+

@@ -32,7 +32,7 @@ class Client(Base):
         return f"Client(id={self.id}, first_name={self.first_name!r}, last_name={self.last_name})"
 
 class Car(Base):
-    _tablename_ = "car"
+    __tablename__ = "car"
 
     id=Column(Integer, primary_key=True, autoincrement=True)
     name=Column(String(30), nullable=False)
