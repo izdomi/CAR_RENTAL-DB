@@ -22,7 +22,7 @@ class Client(Base):
     phone=Column(String(10),nullable=False)
     email=Column(String(15), nullable=True)
     login_at = Column(TIMESTAMP, default=datetime.datetime.utcnow)
-    loout_at = Column(TIMESTAMP, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    logout_at = Column(TIMESTAMP, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
     client_with_car=relationship("Car", foreign_keys="Car.id",back_populates="client_id")
 
     def __str__(self):
