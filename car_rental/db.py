@@ -23,7 +23,6 @@ class Client(Base):
     email=Column(String(15), nullable=True)
     login_at = Column(TIMESTAMP, default=datetime.datetime.utcnow)
     logout_at = Column(TIMESTAMP, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
-    client_with_car=relationship("Car", foreign_keys="Car.id",back_populates="client_id")
 
     def __str__(self):
         return f"{self.id} {self.first_name_name} {self.last_name}"
@@ -42,12 +41,43 @@ class Car(Base):
     color=Column(String(30), nullable=False)
     capacity=Column(Integer, nullable=False)
     rate=Column(Numeric(2,1), nullable=True)
-    client_id=relationship(Client,foreign_keys=[Client.id], back_populates="client_with_car")
+    currentlocation_id = Column(Integer, ForeignKey("Location.id"),nullable=False)
+    type_id = Column(Integer, ForeignKey("Car_type.id"), nullable=False)
 
-    def _str_(self):
-        return f"{self.id}. {self.name}"
+    def __str__(self):
+        return f"{self.id} {self.name}"
 
-    def _repr_(self):
+    def __repr__(self):
         return f"Car(id={self.id}, name={self.name!r})"
+
+class Car_type(Base):
+    __tablename__ = "car_type"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    type_label = Column(String(45), nullable=False)
+    type_descr = Column(String(45), nullable=True)
+
+    def __str__(self):
+        return f"{self.id} {self.type_label}"
+
+    def __repr__(self):
+        return f"Car Type (id={self.id}, type_label={self.type_label})"
+
+class Location(Base):
+    __tablename__ = "location"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    street = Column(String(50), nullable=False)
+    city = Column(String(30), nullable=False)
+    state = Column(String(30), nullable=False)
+
+
+    def __str__(self):
+        return f"{self.id} {self.street} {self.city}"
+
+    def __repr__(self):
+        return f" Car location (id = {self.id}, street={self.street})"
+
+
 
 
