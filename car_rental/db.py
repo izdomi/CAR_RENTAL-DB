@@ -18,7 +18,7 @@ class Client(Base):
     first_name=Column(String(30), nullable=False)
     last_name=Column(String(30), nullable=False)
     license_number=Column(String(20),nullable=False)
-    address=Column(String(100), nullable=False)
+    address=Column(String(100), nullable=True)
     phone=Column(String(10),nullable=False)
     email=Column(String(15), nullable=True)
     login_at = Column(TIMESTAMP, default=datetime.datetime.utcnow)
