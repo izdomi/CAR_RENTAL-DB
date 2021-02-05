@@ -23,6 +23,7 @@ class Client(Base):
     email=Column(String(15), nullable=True)
     login_at = Column(TIMESTAMP, default=datetime.datetime.utcnow)
     logout_at = Column(TIMESTAMP, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    reservation = relationship("Reservation", back_populates="client")
 
     def __str__(self):
         return f"{self.id} {self.first_name_name} {self.last_name}"
@@ -54,7 +55,7 @@ class Location(Base):
     city = Column(String(30), nullable=False)
     state = Column(String(30), nullable=False)
     car = relationship("Car", back_populates="location")
-
+    reservation = relationship("Reservation", back_populates="location")
     def __str__(self):
         return f"{self.id} {self.street} {self.city}"
 
@@ -73,9 +74,9 @@ class Car(Base):
     color=Column(String(30), nullable=False)
     capacity=Column(Integer, nullable=False)
     rate=Column(Numeric(2,1), nullable=True)
-    location_id = Column(Integer, ForeignKey(Location.id),nullable=False)
+    currentlocation_id = Column(Integer, ForeignKey(Location.id),nullable=False)
     car_type_id = Column(Integer, ForeignKey(Car_type.id), nullable=False)
-
+    reservation = relationship("Reservation", back_populates= "car")
 
     def __str__(self):
         return f"{self.id} {self.name}"
@@ -83,3 +84,14 @@ class Car(Base):
     def __repr__(self):
         return f"Car(id={self.id}, name={self.name!r})"
 
+class Reservation(Base):
+    __tablename__ = "reservation"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    amount = Column(Integer, nullable=False)
+    pickup_date = Column(Date, nullable=False)
+    return_date = Column(Date, nullable=False)
+    pickup_location_id = Column(Integer, ForeignKey(Location.id), nullable=False)
+    return_location_id = Column(String(30), nullable=False)
+    client_id = Column(Integer, ForeignKey(Client.id),nullable=False)
+    car_id = Column(Integer,ForeignKey(Car.id), nullable=False)
