@@ -30,25 +30,7 @@ class Client(Base):
     def __repr__(self):
         return f"Client(id={self.id}, first_name={self.first_name!r}, last_name={self.last_name})"
 
-class Car(Base):
-    __tablename__ = "car"
 
-    id=Column(Integer, primary_key=True, autoincrement=True)
-    name=Column(String(30), nullable=False)
-    description=Column(String(500), nullable=False)
-    model=Column(String(30), nullable=False)
-    year=Column(Integer, nullable=False)
-    color=Column(String(30), nullable=False)
-    capacity=Column(Integer, nullable=False)
-    rate=Column(Numeric(2,1), nullable=True)
-    currentlocation_id = Column(Integer, ForeignKey("Location.id"),nullable=False)
-    type_id = Column(Integer, ForeignKey("Car_type.id"), nullable=False)
-
-    def __str__(self):
-        return f"{self.id} {self.name}"
-
-    def __repr__(self):
-        return f"Car(id={self.id}, name={self.name!r})"
 
 class Car_type(Base):
     __tablename__ = "car_type"
@@ -56,6 +38,7 @@ class Car_type(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     type_label = Column(String(45), nullable=False)
     type_descr = Column(String(45), nullable=True)
+    car = relationship("Car", back_populates="car_type")
 
     def __str__(self):
         return f"{self.id} {self.type_label}"
@@ -70,7 +53,7 @@ class Location(Base):
     street = Column(String(50), nullable=False)
     city = Column(String(30), nullable=False)
     state = Column(String(30), nullable=False)
-
+    car = relationship("Car", back_populates="location")
 
     def __str__(self):
         return f"{self.id} {self.street} {self.city}"
@@ -79,5 +62,24 @@ class Location(Base):
         return f" Car location (id = {self.id}, street={self.street})"
 
 
+class Car(Base):
+    __tablename__ = "car"
 
+    id=Column(Integer, primary_key=True, autoincrement=True)
+    name=Column(String(30), nullable=False)
+    description=Column(String(500), nullable=False)
+    model=Column(String(30), nullable=False)
+    year=Column(Integer, nullable=False)
+    color=Column(String(30), nullable=False)
+    capacity=Column(Integer, nullable=False)
+    rate=Column(Numeric(2,1), nullable=True)
+    location_id = Column(Integer, ForeignKey(Location.id),nullable=False)
+    car_type_id = Column(Integer, ForeignKey(Car_type.id), nullable=False)
+
+
+    def __str__(self):
+        return f"{self.id} {self.name}"
+
+    def __repr__(self):
+        return f"Car(id={self.id}, name={self.name!r})"
 
